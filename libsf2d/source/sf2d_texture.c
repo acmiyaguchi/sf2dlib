@@ -143,9 +143,12 @@ void sf2d_bind_texture(const sf2d_texture *texture, GPU_TEXUNIT unit)
 	C3D_TexBind(sf2d_get_texunit(unit), (C3D_Tex*)&texture->tex);
 
 	C3D_TexEnv* env = C3D_GetTexEnv(0);
-	C3D_TexEnvSrc(env, C3D_Both, GPU_TEXTURE0, 0, 0);
-	C3D_TexEnvOpRgb(env, C3D_Both, 0, 0);
-	C3D_TexEnvFunc(env, C3D_Both, GPU_REPLACE);
+	C3D_TexEnvSrc(env, C3D_RGB, GPU_TEXTURE0, 0, 0);
+	C3D_TexEnvSrc(env, C3D_Alpha, GPU_TEXTURE0, 0, 0);
+	C3D_TexEnvOpRgb(env, 0, 0, 0);
+	C3D_TexEnvOpAlpha(env, 0, 0, 0);
+	C3D_TexEnvFunc(env, C3D_RGB, GPU_REPLACE);
+	C3D_TexEnvFunc(env, C3D_Alpha, GPU_REPLACE);
 }
 
 void sf2d_bind_texture_color(const sf2d_texture *texture, GPU_TEXUNIT unit, u32 color)
@@ -153,9 +156,12 @@ void sf2d_bind_texture_color(const sf2d_texture *texture, GPU_TEXUNIT unit, u32 
 	C3D_TexBind(sf2d_get_texunit(unit), (C3D_Tex*)&texture->tex);
 
 	C3D_TexEnv* env = C3D_GetTexEnv(0);
-	C3D_TexEnvSrc(env, C3D_Both, GPU_TEXTURE0, GPU_CONSTANT, 0);
-	C3D_TexEnvOpRgb(env, C3D_Both, 0, 0);
-	C3D_TexEnvFunc(env, C3D_Both, GPU_MODULATE);
+	C3D_TexEnvSrc(env, C3D_RGB, GPU_TEXTURE0, GPU_CONSTANT, 0);
+	C3D_TexEnvSrc(env, C3D_Alpha, GPU_TEXTURE0, GPU_CONSTANT, 0);
+	C3D_TexEnvOpRgb(env, 0, 0, 0);
+	C3D_TexEnvOpAlpha(env, 0, 0, 0);
+	C3D_TexEnvFunc(env, C3D_RGB, GPU_MODULATE);
+	C3D_TexEnvFunc(env, C3D_Alpha, GPU_MODULATE);
 	C3D_TexEnvColor(env, color);
 }
 
